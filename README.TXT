@@ -1,0 +1,1 @@
+该项目是模仿Android中SharedPreferences，给java项目提供一个简单的、轻量级的存储方案
