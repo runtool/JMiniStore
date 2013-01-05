@@ -29,5 +29,7 @@ ClassPackage		目录的管理者，将class的包名抓化为对应的实际文件夹名称
 FileEngine		文件引擎，直接操作的文件的类，依赖本地或者第三方xml处理jar包
 StoreSession		一个会话session，一个会话session本质对应一个存储文件，注意数据的同步性
 SessionFactory		StoreSession的工厂，用于产生并管理StoreSession，本质对应存储文件所在的目录
+
+<img src="https://a248.e.akamai.net/camo.github.com/2d9fb7c3727401085bbdf37a5799971bd4d1995c/687474703a2f2f696d672e736b697463682e636f6d2f32303132303730392d6e6b6463317975677532716d646731737338316d3167723974792e6a7067" style="max-width:100%;">
 　　
 　　
