@@ -1,35 +1,34 @@
-Java�������ݿ���о���ʵ��
-=====
-��飺JMiniStore��Java  Mini Store����һ��������������ֲ�ġ�����չ��java�������ݿ⣬������ֻ�轫JMiniStore��jar�����뵽�Լ���ϵͳ�У��Ϳ�����ʹ�ô�ͳ�����ݿ�һ�����ù̻����ݣ�����ͬ�������ݶ�����XML���ļ��洢���û�ָ����Ŀ¼�У�����ʹ��ϵͳ�����ݿ��Ժܺõ���ϣ������ϵͳ����ֲ�ԡ�����Ҫ���Ǹð������ṩ�˴�ͳ���ݿ��JDBCʹ�ýӿڣ���ֱ���ṩ��OOP�������Ľӿڣ��û������ڵ��õ�������ORM����£�ֱ������������˼��ͷ���������������������˼�����ò������ݿ�ķ�ʽֱ�Ӳ����ļ�ϵͳ��������û�����ݿ��ʱ����Գ䵱���ݿ�ʹ�á��򵥷��㡣
+Java本地数据库的研究与实现
+==============================    
+简介：JMiniStore（Java  Mini Store）是一个轻量级、可移植的、可扩展的java本地数据库，开发者只需将JMiniStore的jar包导入到自己的系统中，就可以像使用传统的数据库一样调用固化数据，所不同的是数据都是以XML的文件存储在用户指定的目录中，这样使得系统和数据可以很好的耦合，提高了系统的移植性。更重要的是该包不仅提供了传统数据库的JDBC使用接口，还直接提供了OOP面向对象的接口，用户无需在调用第三方的ORM框架下，直接用面向对象的思想和方法开发软件。本软件的思想是用操作数据库的方式直接操作文件系统，这样在没有数据库的时候可以充当数据库使用。简单方便。
 
-�����ܹ�ͼ��
-J
-avaBean���л������̻����ļ�
+软件架构图：
+JavaBean序列化后编码固化到文件
+       
+>1、XML Files：数据的存储最终以XML文件的形式直接存储在文件系统中  
+>2、Config:系统的配置文件，如用户信息及用户的访问权限  
+>3、Library:系统的支持库，如用于资源的同步，资源缓存，资源访问控制   
+>4、OOP：以面向对象的形式访问资源的API   
+>5、JDBC：以传统形式访问资源库的API  
+>6、Tools：访问资源时用到的工具，如存放对象的容器等，还可以数据分析统计的工具，如数据挖掘算法工具包  
+>7、Access Control：访问控制层，只有合法的用户才能访问资源   
+>8、Application：应用程序，是资源的调用者  
+>9、Locate：以本地资源的形式访问资源  
+>10、B/S：以网络资源的形式访问资源，本功能主要是兼容传统数据下的软件系统，此模块暂不实现  
 
-1��XML Files�����ݵĴ洢������XML�ļ�����ʽֱ�Ӵ洢���ļ�ϵͳ��
-2��Config:ϵͳ�������ļ������û���Ϣ���û��ķ���Ȩ��
-3��Library:ϵͳ��֧�ֿ⣬��������Դ��ͬ������Դ���棬��Դ���ʿ���
-4��OOP��������������ʽ������Դ��API
-5��JDBC���Դ�ͳ��ʽ������Դ���API
-6��Tools��������Դʱ�õ��Ĺ��ߣ����Ŷ���������ȣ����������ݷ���ͳ�ƵĹ��ߣ��������ھ��㷨���߰�
-7��Access Control�����ʿ��Ʋ㣬ֻ�кϷ����û����ܷ�����Դ
-8��Application��Ӧ�ó�������Դ�ĵ�����
-9��Locate���Ա�����Դ����ʽ������Դ
-10��B/S����������Դ����ʽ������Դ����������Ҫ�Ǽ��ݴ�ͳ�����µ�����ϵͳ����ģ���ݲ�ʵ��
+应用范围：
+　　中小型软件系统 <br/>
+　　
+　　
+　　
+　　关键类：
+　　
+　　　　
+>FileLocker		   底层文件的管理者，用于独占的方式打开文件和关闭文件  
+>ClassPackage		目录的管理者，将class的包名抓化为对应的实际文件夹名称  
+>FileEngine		    文件引擎，直接操作的文件的类，依赖本地或者第三方xml处理jar包  
+>StoreSession		一个会话session，一个会话session本质对应一个存储文件，注意数  据的同步性   
+>SessionFactory		StoreSession的工厂，用于产生并管理StoreSession，本质对应存储文件所在的目录  
 
-Ӧ�÷�Χ��
-������С������ϵͳ
-����
-����
-����
-�����ؼ��ࣺ
-����
-��������
-FileLocker		  �ײ��ļ��Ĺ����ߣ����ڶ�ռ�ķ�ʽ���ļ��͹ر��ļ�
-ClassPackage		Ŀ¼�Ĺ����ߣ���class�İ���ץ��Ϊ��Ӧ��ʵ���ļ�������
-FileEngine		�ļ����棬ֱ�Ӳ������ļ����࣬�������ػ��ߵ�����xml����jar��
-StoreSession		һ���Ựsession��һ���Ựsession���ʶ�Ӧһ���洢�ļ���ע�����ݵ�ͬ����
-SessionFactory		StoreSession�Ĺ��������ڲ���������StoreSession�����ʶ�Ӧ�洢�ļ����ڵ�Ŀ¼
-
-![Test XIB](https://a248.e.akamai.net/camo.github.com/2d9fb7c3727401085bbdf37a5799971bd4d1995c/687474703a2f2f696d672e736b697463682e636f6d2f32303132303730392d6e6b6463317975677532716d646731737338316d3167723974792e6a7067) ����
-����
+![Test XIB](https://a248.e.akamai.net/camo.github.com/2d9fb7c3727401085bbdf37a5799971bd4d1995c/687474703a2f2f696d672e736b697463682e636f6d2f32303132303730392d6e6b6463317975677532716d646731737338316d3167723974792e6a7067) 　　
+　　
